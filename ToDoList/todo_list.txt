@@ -1,5 +1,6 @@
-swimming:false
-Coding:false
-Gaming:true
-finish coding project:true
-buy cat food:false
+Coding:true
+Finishing the To-do List app:false
+Make a better interface:false
+Check if key features are working:false
+Add stuff like certain key makes it so a certain action is done:false
+Test to check if this app can have big descriptions like this one and if it doesnt bug out:true

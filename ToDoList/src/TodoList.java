@@ -16,6 +16,10 @@ public class TodoList {
         saveTasksToFile();
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
     public void viewTasks(){
         if(tasks.isEmpty()) {
             System.out.println("\nNo tasks found.");
@@ -27,7 +31,7 @@ public class TodoList {
     }
 
     public void markAsCompleted(int taskNumber) {
-        if(taskNumber >= 0 && taskNumber < tasks.size()){
+        if(taskNumber >= 1 && taskNumber <= tasks.size()){
             tasks.get(taskNumber - 1).markedAsCompleted();
             saveTasksToFile();
         } else {
@@ -36,7 +40,7 @@ public class TodoList {
     }
 
     public void deleteTask(int taskNumber){
-        if (taskNumber >= 0 && taskNumber < tasks.size()){
+        if (taskNumber >= 1 && taskNumber <= tasks.size()){
             tasks.remove(taskNumber - 1);
             saveTasksToFile();
         } else {
