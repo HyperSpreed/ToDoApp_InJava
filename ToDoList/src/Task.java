@@ -25,7 +25,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return (isCompleted ? "[x] " : "[ ] ") + description; //If task is completed, then "[x]", else "[ ]".
+        return (isCompleted ? "[x] " : "[_] ") + description; //If task is completed, then "[x]", else "[ ]".
     }
 
 }

@@ -2,17 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TodoListApp extends JFrame {
     private TodoList todoList;
     private DefaultListModel<String> listModel;
     private JList<String> taskList;
+    private JTextField taskInput;
 
     public TodoListApp(){
         todoList = new TodoList();
 
         setTitle("To-do List App");
         setSize(400, 300);
+        ImageIcon icon = new ImageIcon("todolisticon.png"); // Replace with your own icon file
+        setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -21,9 +26,17 @@ public class TodoListApp extends JFrame {
         taskList = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(taskList);
         JTextField taskInput = new JTextField();
-        JButton addTaskButton = new JButton("Add Task");
-        JButton completeTaskButton = new JButton("Mark as Completed");
-        JButton deleteTaskButton = new JButton("Delete Task");
+        JButton addTaskButton = new JButton("Add Task (Enter)");
+        JButton completeTaskButton = new JButton("Mark as Completed (=)");
+        JButton deleteTaskButton = new JButton("Delete Task (DEL)");
+
+        ((JComponent) getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        Font font = new Font("Roboto", Font.PLAIN, 14);
+        taskInput.setFont(font);
+        taskList.setFont(font);
+
+        getContentPane().setBackground(new Color(230,230,230));
 
         add(scrollPane, BorderLayout.CENTER);
 
@@ -39,6 +52,45 @@ public class TodoListApp extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
 
         refreshList();
+
+        taskInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String description = taskInput.getText().trim();
+                    if (!description.isEmpty()) {
+                        todoList.addTask(description, false);
+                        refreshList();
+                        taskInput.setText("");
+                    } else {
+                        JOptionPane.showMessageDialog(TodoListApp.this, "Please input a description in the text field.");
+                    }
+                }
+            }
+        });
+
+        taskList.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_EQUALS) {
+                    int selectedIndex = taskList.getSelectedIndex();
+                    if (selectedIndex != -1) {
+                        todoList.markAsCompleted(selectedIndex + 1);
+                        refreshList();
+                    } else {
+                        JOptionPane.showMessageDialog(TodoListApp.this, "Please select a task to mark as completed.");
+                    }
+                } else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    int selectedIndex = taskList.getSelectedIndex();
+                    if (selectedIndex != -1) {
+                        todoList.deleteTask(selectedIndex + 1);
+                        refreshList();
+                    } else {
+                        JOptionPane.showMessageDialog(TodoListApp.this, "Please select a task to delete.");
+                    }
+                }
+            }
+        });
 
         addTaskButton.addActionListener(new ActionListener() {
 

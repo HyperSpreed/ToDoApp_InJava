@@ -1,6 +1,6 @@
 Coding:true
-Finishing the To-do List app:false
-Make a better interface:false
-Check if key features are working:false
-Add stuff like certain key makes it so a certain action is done:false
+Finishing the To-do List app:true
+Make a better interface:true
+Check if key features are working:true
+Add stuff like certain key makes it so a certain action is done:true
 Test to check if this app can have big descriptions like this one and if it doesnt bug out:true
