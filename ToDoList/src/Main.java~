@@ -22,20 +22,20 @@ public class Main {
                 case 1:
                     System.out.print("\nEnter task description: ");
                     String description = scanner.nextLine();
-                    todoList.addTask(description, false);
+                    todoList.addTask(description);
                     break;
                 case 2:
                     todoList.viewTasks();
                     break;
                 case 3:
                     System.out.println("\nEnter task number to mark as completed: ");
-                    int taskNumberIndex = scanner.nextInt();
-                    todoList.markAsCompleted(taskNumberIndex);
+                    int taskNumber = scanner.nextInt();
+                    todoList.markAsCompleted(taskNumber);
                     break;
                 case 4:
                     System.out.println("\nEnter task number to delete: ");
-                    int taskNumberIndexDelete = scanner.nextInt();
-                    todoList.deleteTask(taskNumberIndexDelete);
+                    taskNumber = scanner.nextInt();
+                    todoList.deleteTask(taskNumber);
                     break;
                 case 5:
                     isRunning = false;
