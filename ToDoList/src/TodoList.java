@@ -1,6 +1,9 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
+import java.time.format.DateTimeParseException;
 
 public class TodoList {
     private List<Task> tasks;
@@ -11,8 +14,8 @@ public class TodoList {
         loadTasksFromFile();
     }
 
-    public void addTask(String description, boolean isCompleted) {
-        tasks.add(new Task(description, isCompleted));
+    public void addTask(String description, boolean isCompleted, LocalDate dueDate) {
+        tasks.add(new Task(description, isCompleted, dueDate));
         saveTasksToFile();
     }
 
@@ -62,18 +65,25 @@ public class TodoList {
     private void loadTasksFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));) {
             String line;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (!line.isEmpty()){
                     String[] parts = line.split(":");
-                    if (parts.length == 2) {
+                    if (parts.length >= 2) {
                         String description = parts[0].trim();
-                        String status = parts[1].trim().toLowerCase();
-                        boolean isCompleted = status.equals("true");
-                        tasks.add(new Task(description, isCompleted));
+                        boolean isCompleted = Boolean.parseBoolean(parts[1].trim());
+                        LocalDate dueDate = null;
+                        if (parts.length >= 3 && !parts[2].trim().isEmpty()) {
+                            try {
+                                dueDate = LocalDate.parse(parts[2].trim(), formatter);
+                            } catch (DateTimeParseException e) {
+                                System.out.println("Invalid due date format in file: " + parts[2]);
+                            }
+                        }
+                        tasks.add(new Task(description, isCompleted, dueDate));
                     }
                 }
-
             }
         } catch (IOException e) {
             System.out.println("No existing tasks found or error in loading tasks: " + e.getMessage());

@@ -1,6 +1,4 @@
-Coding:true
-Finishing the To-do List app:true
-Make a better interface:true
-Check if key features are working:true
-Add stuff like certain key makes it so a certain action is done:true
-Test to check if this app can have big descriptions like this one and if it doesnt bug out:true
+Coding:false:
+Coding2.0:true:2025-08-13
+Maker:false:
+Maker:true:2026-11-20
